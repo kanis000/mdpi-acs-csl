@@ -1,0 +1,629 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<style xmlns="http://purl.org/net/xbiblio/csl"
+       class="in-text"
+       version="1.0.2"
+       demote-non-dropping-particle="sort-only"
+       page-range-format="expanded"
+       default-locale="en-US">
+
+  <info>
+    <title>MDPI ACS 11th Edition (2025) - Custom</title>
+    <title-short>MDPI ACS 2025 Custom</title-short>
+
+    <id>http://www.zotero.org/styles/mdpi-acs-11th-edition-2025-custom</id>
+
+    <link href="http://www.zotero.org/styles/multidisciplinary-digital-publishing-institute"
+          rel="template"/>
+
+    <link href="https://www.mdpi.com/authors/references"
+          rel="documentation"/>
+
+    <category citation-format="numeric"/>
+    <category field="science"/>
+
+    <summary>
+      Custom numeric reference style aligned with the MDPI ACS
+      Reference List and Citations Style Guide, 11th Edition,
+      December 2025.
+    </summary>
+
+    <updated>2026-09-30T00:00:00+00:00</updated>
+  </info>
+
+
+  <!-- ===================================================== -->
+  <!-- TERMS -->
+  <!-- ===================================================== -->
+
+  <locale xml:lang="en">
+    <terms>
+      <term name="available at">Available online</term>
+      <term name="accessed">accessed on</term>
+      <term name="presented at">Presented at the</term>
+    </terms>
+  </locale>
+
+
+  <!-- ===================================================== -->
+  <!-- AUTHORS -->
+  <!-- ===================================================== -->
+
+  <macro name="author">
+    <names variable="author">
+
+      <name
+        name-as-sort-order="all"
+        sort-separator=", "
+        initialize-with="."
+        delimiter="; "
+        et-al-min="11"
+        et-al-use-first="10"/>
+
+      <et-al term="et-al"/>
+
+      <substitute>
+        <names variable="editor"/>
+        <text variable="publisher"/>
+        <text variable="title"/>
+      </substitute>
+
+    </names>
+  </macro>
+
+
+  <!-- ===================================================== -->
+  <!-- EDITORS -->
+  <!-- ===================================================== -->
+
+  <macro name="editor">
+    <names variable="editor">
+
+      <name
+        name-as-sort-order="all"
+        sort-separator=", "
+        initialize-with="."
+        delimiter=", "/>
+
+      <label
+        form="short"
+        prefix=", "
+        text-case="capitalize-first"/>
+
+    </names>
+  </macro>
+
+
+  <!-- ===================================================== -->
+  <!-- YEAR -->
+  <!-- ===================================================== -->
+
+  <macro name="issued">
+    <date variable="issued">
+      <date-part name="year"/>
+    </date>
+  </macro>
+
+
+  <!-- ===================================================== -->
+  <!-- FULL DATE -->
+  <!-- ===================================================== -->
+
+  <macro name="full-issued">
+    <date variable="issued" delimiter=" ">
+
+      <date-part name="day"/>
+      <date-part name="month" form="long"/>
+      <date-part name="year"/>
+
+    </date>
+  </macro>
+
+
+  <!-- ===================================================== -->
+  <!-- EDITION -->
+  <!-- ===================================================== -->
+
+  <macro name="edition">
+
+    <choose>
+
+      <if is-numeric="edition">
+
+        <group delimiter=" ">
+          <number variable="edition" form="ordinal"/>
+          <text term="edition" form="short"/>
+        </group>
+
+      </if>
+
+      <else>
+        <text variable="edition"/>
+      </else>
+
+    </choose>
+
+  </macro>
+
+
+  <!-- ===================================================== -->
+  <!-- PAGES -->
+  <!-- ===================================================== -->
+
+  <macro name="pages">
+
+    <group delimiter=" ">
+      <label variable="page" form="short"/>
+      <text variable="page"/>
+    </group>
+
+  </macro>
+
+
+  <!-- ===================================================== -->
+  <!-- PUBLISHER -->
+  <!-- ===================================================== -->
+
+  <macro name="publisher">
+
+    <group delimiter=": ">
+      <text variable="publisher"/>
+      <text variable="publisher-place"/>
+    </group>
+
+  </macro>
+
+
+  <!-- ===================================================== -->
+  <!-- DOI -->
+  <!-- ===================================================== -->
+
+  <macro name="doi">
+
+    <choose>
+
+      <if variable="DOI">
+        <text
+          variable="DOI"
+          prefix=". https://doi.org/"/>
+      </if>
+
+    </choose>
+
+  </macro>
+
+
+  <!-- ===================================================== -->
+  <!-- IN-TEXT CITATIONS -->
+  <!-- ===================================================== -->
+
+  <citation collapse="citation-number">
+
+    <sort>
+      <key variable="citation-number"/>
+    </sort>
+
+    <layout
+      prefix="["
+      suffix="]"
+      delimiter=",">
+
+      <text variable="citation-number"/>
+
+    </layout>
+
+  </citation>
+
+
+  <!-- ===================================================== -->
+  <!-- BIBLIOGRAPHY -->
+  <!-- ===================================================== -->
+
+  <bibliography
+    entry-spacing="0"
+    second-field-align="flush">
+
+    <layout suffix=".">
+
+      <text
+        variable="citation-number"
+        suffix=". "/>
+
+      <text
+        macro="author"
+        suffix=" "/>
+
+
+      <choose>
+
+
+        <!-- ================================================= -->
+        <!-- JOURNAL ARTICLE -->
+        <!-- Author. Title. J. Abbrev. Year, Volume, Pages. DOI -->
+        <!-- ================================================= -->
+
+        <if type="article-journal">
+
+          <group delimiter=" ">
+
+            <text
+              variable="title"
+              suffix="."/>
+
+            <text
+              variable="container-title"
+              form="short"
+              font-style="italic"/>
+
+            <group delimiter=", ">
+
+              <text
+                macro="issued"
+                font-weight="bold"/>
+
+              <text
+                variable="volume"
+                font-style="italic"/>
+
+              <text variable="page"/>
+
+            </group>
+
+          </group>
+
+        </if>
+
+
+        <!-- ================================================= -->
+        <!-- CONFERENCE PAPER -->
+        <!-- ================================================= -->
+
+        <else-if type="paper-conference">
+
+          <group delimiter=" ">
+
+            <text
+              variable="title"
+              suffix="."/>
+
+            <group delimiter=", ">
+
+              <text
+                variable="container-title"
+                prefix="In Proceedings of the "/>
+
+              <text variable="event-place"/>
+
+              <text macro="full-issued"/>
+
+            </group>
+
+            <text
+              macro="pages"
+              prefix="; "/>
+
+          </group>
+
+        </else-if>
+
+
+        <!-- ================================================= -->
+        <!-- DATASET -->
+        <!-- ================================================= -->
+
+        <else-if type="dataset">
+
+          <group delimiter=" ">
+
+            <text
+              variable="title"
+              suffix="."/>
+
+            <group delimiter=", ">
+
+              <choose>
+
+                <if variable="publisher">
+                  <text variable="publisher"/>
+                </if>
+
+                <else>
+                  <text variable="container-title"/>
+                </else>
+
+              </choose>
+
+              <text
+                variable="version"
+                prefix="Version "/>
+
+              <text macro="issued"/>
+
+            </group>
+
+          </group>
+
+        </else-if>
+
+
+        <!-- ================================================= -->
+        <!-- WEBSITE -->
+        <!-- ================================================= -->
+
+        <else-if type="webpage post post-weblog"
+                 match="any">
+
+          <group delimiter=" ">
+
+            <text
+              variable="title"
+              suffix="."/>
+
+            <group delimiter=": ">
+
+              <text
+                term="available at"
+                text-case="capitalize-first"/>
+
+              <text variable="URL"/>
+
+            </group>
+
+            <group
+              delimiter=" "
+              prefix="("
+              suffix=")">
+
+              <text term="accessed"/>
+
+              <date
+                variable="accessed"
+                delimiter=" ">
+
+                <date-part name="day"/>
+
+                <date-part
+                  name="month"
+                  form="long"/>
+
+                <date-part name="year"/>
+
+              </date>
+
+            </group>
+
+          </group>
+
+        </else-if>
+
+
+        <!-- ================================================= -->
+        <!-- BOOK -->
+        <!-- ================================================= -->
+
+        <else-if type="book">
+
+          <group delimiter="; ">
+
+            <group delimiter=", ">
+
+              <text
+                variable="title"
+                font-style="italic"/>
+
+              <text macro="edition"/>
+
+            </group>
+
+            <group delimiter=", ">
+
+              <text macro="publisher"/>
+
+              <text macro="issued"/>
+
+            </group>
+
+            <text macro="pages"/>
+
+          </group>
+
+        </else-if>
+
+
+        <!-- ================================================= -->
+        <!-- BOOK CHAPTER -->
+        <!-- ================================================= -->
+
+        <else-if type="chapter">
+
+          <group delimiter="; ">
+
+            <group delimiter=" ">
+
+              <text
+                variable="title"
+                suffix="."/>
+
+              <text
+                variable="container-title"
+                prefix="In "
+                font-style="italic"/>
+
+            </group>
+
+            <text macro="editor"/>
+
+            <text macro="edition"/>
+
+            <group delimiter=", ">
+
+              <text macro="publisher"/>
+
+              <text macro="issued"/>
+
+            </group>
+
+            <text macro="pages"/>
+
+          </group>
+
+        </else-if>
+
+
+        <!-- ================================================= -->
+        <!-- THESIS -->
+        <!-- ================================================= -->
+
+        <else-if type="thesis">
+
+          <group delimiter=", ">
+
+            <text
+              variable="title"
+              suffix="."/>
+
+            <text variable="genre"/>
+
+            <text variable="publisher"/>
+
+            <text variable="publisher-place"/>
+
+            <text macro="full-issued"/>
+
+          </group>
+
+        </else-if>
+
+
+        <!-- ================================================= -->
+        <!-- REPORT -->
+        <!-- ================================================= -->
+
+        <else-if type="report">
+
+          <group delimiter="; ">
+
+            <group delimiter=" ">
+
+              <text variable="title"/>
+
+              <text
+                variable="number"
+                prefix="Report No. "/>
+
+            </group>
+
+            <group delimiter=", ">
+
+              <text macro="publisher"/>
+
+              <text macro="issued"/>
+
+            </group>
+
+            <text macro="pages"/>
+
+          </group>
+
+        </else-if>
+
+
+        <!-- ================================================= -->
+        <!-- STANDARD -->
+        <!-- ================================================= -->
+
+        <else-if type="standard">
+
+          <group delimiter="; ">
+
+            <group delimiter=" ">
+
+              <text variable="number"/>
+
+              <text variable="title"/>
+
+            </group>
+
+            <group delimiter=", ">
+
+              <text macro="publisher"/>
+
+              <text macro="issued"/>
+
+            </group>
+
+          </group>
+
+        </else-if>
+
+
+        <!-- ================================================= -->
+        <!-- PATENT -->
+        <!-- ================================================= -->
+
+        <else-if type="patent">
+
+          <group delimiter=", ">
+
+            <text
+              variable="title"
+              suffix="."/>
+
+            <text variable="number"/>
+
+            <text macro="full-issued"/>
+
+          </group>
+
+        </else-if>
+
+
+        <!-- ================================================= -->
+        <!-- FALLBACK -->
+        <!-- ================================================= -->
+
+        <else>
+
+          <group delimiter=" ">
+
+            <text
+              variable="title"
+              suffix="."/>
+
+            <text
+              variable="container-title"
+              form="short"
+              font-style="italic"/>
+
+            <group delimiter=", ">
+
+              <text variable="publisher"/>
+
+              <text macro="issued"/>
+
+              <text
+                variable="volume"
+                font-style="italic"/>
+
+              <text variable="page"/>
+
+            </group>
+
+          </group>
+
+        </else>
+
+
+      </choose>
+
+
+      <!-- DOI for every reference type where available -->
+
+      <text macro="doi"/>
+
+
+    </layout>
+
+  </bibliography>
+
+</style>
